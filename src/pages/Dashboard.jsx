@@ -10,21 +10,30 @@ export const UserContext = createContext()
 
 export default function Dashboard() {
     const { isLoading, isLoggedIn } = useSelector(state => state.auth);
+    const { isMessageLoading, messages } = useSelector(state => state.message);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [isStarter, setIsStarter] = useState(true)
     const [currentUser, setCurrentUser] = useState(null)
+    const [isSelected, setIsSelected] = useState(false);
+
 
     useEffect(() => {
         if (!isLoggedIn) navigate('/');
     }, [isLoggedIn, navigate]);
 
     return (
-        <UserContext.Provider value={{isStarter, setIsStarter, currentUser, setCurrentUser}}>
+        <UserContext.Provider value={{ isSelected, setIsSelected, currentUser, setCurrentUser }}>
             <main className="w-full h-screen overflow-hidden flex">
                 {isLoading && <HalfRingLoader />}
                 <Sidebar />
-                {isStarter ? <Starter /> : <Messagebar />}
+                {
+                    isMessageLoading ?
+                        <div className="relative flex-1 z-0">
+                            <HalfRingLoader />
+                        </div>
+                        : isSelected ? <Messagebar /> : <Starter txt={"Выберите кому хотели бы написать"}/>
+                }
             </main>
         </UserContext.Provider>
     )

@@ -18,7 +18,7 @@ export default function Verify({ setVerifyModal, newAuth }) {
         e.preventDefault();
         if (code === "") {
             dispatch(authFailure({ type: "otp" }));
-            toast.error("Iltimos kod kiriting");
+            toast.error("please enter code");
         }
         else {
             try {

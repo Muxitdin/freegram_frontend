@@ -28,22 +28,22 @@ export default function Register() {
         e.preventDefault();
         if (newAuth.fullname === "") {
             dispatch(authFailure({ type: "fullname" }));
-            toast.error("Iltimos ism kiriting");
+            toast.error("please enter your fullname");
         }
         else if (newAuth.phoneNumber === "") {
             dispatch(authFailure({ type: "phone" }));
-            toast.error("Iltimos telefon raqam kiriting");
+            toast.error("please enter your phone number");
         }
         else if (newAuth.password === "") {
             dispatch(authFailure({ type: "password" }));
-            toast.error("Iltimos parol kiriting");
+            toast.error("please enter your password");
         }
         else {
             try {
                 dispatch(authStart());
                 await service.authRegister({ ...newAuth, phoneNumber: `998${newAuth.phoneNumber}` });
                 // setNewAuth(data);
-                toast.success("Xabar muvaffaqiyatli jo'natildi");
+                toast.success("Please check your phone for a verification code");
                 setVerifyModal(true);
                 dispatch(authFailure());
             } catch (error) {
@@ -63,7 +63,7 @@ export default function Register() {
         <main onClick={() => dispatch(authFailure())} className="h-screen w-full absolute z-10">
             <div className="w-full flex flex-col items-center my-8">
                 <ImTelegram className="text-center text-blue-700 text-9xl mb-4" />
-                <h1 className="text-center text-3xl">Ro'yxatdan o'ting</h1>
+                <h1 className="text-center text-3xl">Sign Up to Freegram</h1>
             </div>
 
             <form className="max-w-sm mx-auto" onSubmit={handleRegister}>

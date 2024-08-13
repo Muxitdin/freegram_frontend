@@ -25,11 +25,11 @@ export default function Login() {
         e.preventDefault();
         if (newAuth.phoneNumber === "") {
             dispatch(authFailure({ type: "phone" }));
-            toast.error("Iltimos telefon raqam kiriting");
+            toast.error("please enter your phone number");
         }
         else if (newAuth.password === "") {
             dispatch(authFailure({ type: "password" }));
-            toast.error("Iltimos parol kiriting");
+            toast.error("please enter your password");
         }
         else {
             try {
@@ -52,7 +52,7 @@ export default function Login() {
         <main onClick={() => dispatch(authFailure())} className="h-screen w-full absolute z-10">
             <div className="w-full flex flex-col items-center my-8">
                 <ImTelegram className="text-center text-blue-700 text-9xl mb-4" />
-                <h1 className="text-center text-3xl">Freegram hisobingizga kiring</h1>
+                <h1 className="text-center text-3xl">Sign In to Freegram</h1>
             </div>
 
             <form className="max-w-sm mx-auto" onSubmit={handleLogin}>
@@ -60,7 +60,7 @@ export default function Login() {
                     <label
                         htmlFor="phoneNumber"
                         className="absolute text-sm bg-white -top-3 left-3">
-                        <span>Telefon</span>
+                        <span>phone</span>
                         <span className="text-base text-red-500 ml-1">*</span>
                     </label>
                     <div className="flex">
@@ -86,7 +86,7 @@ export default function Login() {
                     <label
                         htmlFor="password"
                         className="absolute text-sm bg-white -top-2.5 left-3">
-                        <span>Parol</span>
+                        <span>password</span>
                         <span className="text-sm text-red-500 ml-1">*</span>
                     </label>
                     <input
@@ -109,12 +109,12 @@ export default function Login() {
                     disabled={isLoading}
                     className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-1 text-center disabled:bg-blue-800"
                 >
-                    {isLoading ? "Yuklanmoqda..." : "Hisobga kirish"}
+                    {isLoading ? "Loading..." : "Log In"}
                 </button>
 
                 <div className="flex justify-end">
                     <Link to={"/register"} className="text-blue-500 hover:underline">
-                        Ro'yhatdan o'tish
+                    get registered
                     </Link>
                 </div>
             </form>
