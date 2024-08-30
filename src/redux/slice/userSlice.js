@@ -16,10 +16,10 @@ const UserSlice = createSlice({
         },
         userSuccess: (state, action) => {
             state.isLoading = false;
-            if (action.payload.type === "a") {
+            if (action.payload.type === "one") {
                 state.user = action.payload.data;
             }
-            else if (action.payload.type === "b") {
+            else if (action.payload.type === "all") {
                 state.users = action.payload.data;
             }
         },

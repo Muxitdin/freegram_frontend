@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { userEnd, userStart, userSuccess } from "../../redux/slice/userSlice";
 import service from "../../config/service";
@@ -8,8 +8,9 @@ import { messageEnd, messageStart, messageSuccess } from "../../redux/slice/mess
 
 
 export default function UserComponent() {
-    const { currentUser, setCurrentUser, setIsSelected } = useContext(UserContext);
+    const { setCurrentUser, currentUser, setIsSelected } = useContext(UserContext);
     const { users, active } = useSelector(state => state.user);
+    const { messages } = useSelector(state => state.message);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export default function UserComponent() {
             try {
                 dispatch(userStart());
                 const { data } = await service.getAllUsers();
-                dispatch(userSuccess({ data, type: "b" }));
+                dispatch(userSuccess({ data, type: "all" }));
             } catch (error) {
                 dispatch(userEnd());
                 console.log(error);
@@ -32,7 +33,8 @@ export default function UserComponent() {
             setCurrentUser(user)
             dispatch(messageStart());
             const { data } = await service.getAllMessages(user?._id);
-            dispatch(messageSuccess(data));
+            dispatch(messageSuccess({ data, type: "set" }));
+            dispatch(userSuccess({ data: user, type: "one" }))
             setIsSelected(user?._id);
         } catch (error) {
             dispatch(messageEnd());
@@ -40,6 +42,20 @@ export default function UserComponent() {
             console.log(error);
         }
     }
+
+    // useEffect(() => {
+    //     const fetchMessages = async () => {
+    //         console.log(currentUser)
+    //         try {
+    //             dispatch(messageStart());
+    //             const { data } = await service.getAllMessages(currentUser?._id);
+    //             dispatch(messageSuccess({ data, type: "set" }));
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     fetchMessages();
+    // }, [])
 
     return (
         <section className="overflow-y-auto">

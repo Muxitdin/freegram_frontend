@@ -1,4 +1,4 @@
-export default function Message({ sender, message, isOwnMessage, time }) {
+export default function Message({ sender, message, isOwnMessage, time, customRef }) {
     const extractTime = (time) => {
         const date = new Date(time);
         const hours = date.getHours().toString().padStart(2, '0');
@@ -7,7 +7,7 @@ export default function Message({ sender, message, isOwnMessage, time }) {
     }
 
     return (
-        <div className={`flex my-2 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
+        <div ref={customRef} className={`flex my-2 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
             <div className={`flex flex-col h-fit max-w-md px-2 py-1 rounded-xl overflow-hidden ${isOwnMessage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}>
                 <span className="flex justify-between items-end">
                     <div className="break-words max-w-full whitespace-pre-wrap">{message}</div>

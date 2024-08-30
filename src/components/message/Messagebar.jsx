@@ -1,16 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
 import MessagebarHeader from "./MessagebarHeader";
 import MessageInput from "./MessageInput";
 import Starter from "./Starter";
-import { UserContext } from "../../pages/Dashboard";
-
 
 export default function Messagebar() {
-    const dispatch = useDispatch();
     const { auth } = useSelector(state => state.auth);
     const { messages } = useSelector(state => state.message);
+    const lastMessageRef = useRef();
+
+    useEffect(() => {
+        setTimeout(() => {
+            lastMessageRef.current?.scrollIntoView({ behavior: "smooth" })
+        }, 100)
+    }, [messages])
 
     return (
         <main className="h-full relative flex-1 flex flex-col bg-main-1">
@@ -25,6 +29,7 @@ export default function Messagebar() {
                                 message={msg?.message}
                                 time={msg?.createdAt}
                                 isOwnMessage={msg?.sender?._id === auth?._id}
+                                customRef={lastMessageRef}
                             />
                         ))
                     }
