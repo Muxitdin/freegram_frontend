@@ -13,6 +13,7 @@ import toast, { Toaster } from "react-hot-toast"
 import NotFound from "./pages/NotFound"
 import { io } from 'socket.io-client'
 import { NotificationToast } from "./utils/NotificationToast"
+import { baseURL } from './config/api'
 
 export default function App() {
     const { auth } = useSelector(state => state.auth)
@@ -37,7 +38,7 @@ export default function App() {
 
     useEffect(() => {
         if (auth?._id) {
-            const socket = io("http://localhost:3000", { query: { authId: auth._id } })
+            const socket = io(baseURL, { query: { authId: auth._id } })
 
             socket.on("getActiveUsers", (activeUsers) => {
                 dispatch(activeSuccess(activeUsers))
@@ -47,14 +48,10 @@ export default function App() {
                 console.log(data)
                 console.log(user)
                 if (user?._id === data.sender) {
-                    dispatch(messageSuccess({ data: data.newMessage, type: "push" }))
+                    dispatch(messageSuccess({ data: data.newMessage, type: "push" })) // вытягивание нового сообщения и добавление его в массив дабы сразу отобразилось у собеседника
                 } else {
                     toast.custom((t) => <NotificationToast t={t} message={data.newMessage} />)
                 }
-                // toast.custom((t) => <NotificationToast t={t} message={message} />)
-                // if (user && user._id !== message && message.sender && message.sender._id) return
-                // dispatch(messageSuccess({ data: message, type: "push" }))
-                // console.log(message)
             })
 
             return () => {

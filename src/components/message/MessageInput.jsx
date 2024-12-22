@@ -39,21 +39,11 @@ export default function MessageInput() {
         e?.preventDefault()
         try {
             console.log(message)
-            if (message.trim() === "") return // Prevent sending empty messages
+            if (message.trim() === "") return
             const { data } = await service.sendMessage(currentUser._id, message)
             console.log(data)
             dispatch(messageSuccess({ data, type: "push" }))
             setMessage('')
-
-            // try {
-            //     // dispatch(messageStart());
-            //     const { data } = await service.getAllMessages(currentUser._id);
-            //     dispatch(messageSuccess(data));
-            // } catch (error) {
-            //     dispatch(messageEnd());
-            //     toast.error(error.message);
-            //     console.log(error);
-            // }
         } catch (error) {
             console.log(error)
         }
