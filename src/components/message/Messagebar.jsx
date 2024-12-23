@@ -17,10 +17,10 @@ export default function Messagebar() {
     }, [messages])
 
     return (
-        <main className="h-full relative flex-1 flex flex-col bg-main-1">
+        <main className="h-full relative flex-1 flex flex-col bg-primary">
             <MessagebarHeader />
             {messages.length > 0 ? (
-                <section className="overflow-y-auto flex-1 p-4 pb-20">
+                <section className="overflow-y-auto flex-1 p-4 pb-20 bg-secondary">
                     {
                         messages.map(msg => (
                             <Message

@@ -60,18 +60,21 @@ export default function Register() {
     if (verifyModal) return <Verify setVerifyModal={setVerifyModal} newAuth={newAuth} />
 
     return (
-        <main onClick={() => dispatch(authFailure())} className="h-screen w-full absolute z-10">
+        <main onClick={() => dispatch(authFailure())} className="h-screen w-full absolute z-10 bg-primary">
             <div className="w-full flex flex-col items-center my-8">
-                <ImTelegram className="text-center text-blue-700 text-9xl mb-4" />
-                <h1 className="text-center text-3xl">Sign Up to Freegram</h1>
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Monkey%20Face.webp" 
+                        alt="Monkey Face" 
+                        width="100" 
+                        height="100" />
+                <h1 className="text-center text-text text-3xl">Sign Up to Freegram</h1>
             </div>
 
             <form className="max-w-sm mx-auto" onSubmit={handleRegister}>
                 <div className="relative mb-6">
                     <label
                         htmlFor="fullname"
-                        className="absolute text-sm bg-white -top-2.5 left-3">
-                        <span>Ism (F.I.)</span>
+                        className="absolute text-sm bg-primary text-text -top-2.5 left-3">
+                        <span>Имя</span>
                         <span className="text-sm text-red-500 ml-1">*</span>
                     </label>
                     <input
@@ -81,20 +84,20 @@ export default function Register() {
                         type="text"
                         name="fullname"
                         id="fullname"
-                        className={`${isError?.type === "fullname" ? 'border-red-500' : ''} w-full p-2 rounded-lg border-2 outline-blue-700 disabled:bg-gray-100`} />
+                        className={`${isError?.type === "fullname" ? 'border-red-500' : ''} w-full p-2 rounded-lg border-2 outline-blue-700 disabled:bg-secondary bg-primary text-text`} />
                 </div>
 
                 <div className="flex flex-col relative mb-6">
                     <label
                         htmlFor="phoneNumber"
-                        className="absolute text-sm bg-white -top-3 left-3">
-                        <span>Telefon</span>
+                        className="absolute text-sm bg-primary text-text -top-3 left-3">
+                        <span>Телефон</span>
                         <span className="text-base text-red-500 ml-1">*</span>
                     </label>
                     <div className="flex">
                         <label
                             htmlFor="phoneNumber"
-                            className="w-20 text-base border-2 border-r-0 rounded-l-lg px-4 py-2">
+                            className="w-20 text-base text-text border-2 border-r-0 rounded-l-lg px-4 py-2">
                             +998
                         </label>
                         <input
@@ -104,7 +107,7 @@ export default function Register() {
                             type="number"
                             name="phoneNumber"
                             id="phoneNumber"
-                            className={`${isError?.type === "phone" ? 'border-red-500' : ''} w-full border-2 rounded-lg rounded-l-none p-2 outline-blue-700 disabled:bg-gray-100`}
+                            className={`${isError?.type === "phone" ? 'border-red-500' : ''} w-full border-2 rounded-lg rounded-l-none p-2 outline-blue-700 disabled:bg-secondary bg-primary text-text`}
                         />
                     </div>
                 </div>
@@ -112,8 +115,8 @@ export default function Register() {
                 <div className="relative mb-8">
                     <label
                         htmlFor="password"
-                        className="absolute text-sm bg-white -top-2.5 left-3">
-                        <span>Yangi parol</span>
+                        className="absolute text-sm bg-primary text-text -top-2.5 left-3">
+                        <span>Пароль</span>
                         <span className="text-sm text-red-500 ml-1">*</span>
                     </label>
                     <input
@@ -123,7 +126,7 @@ export default function Register() {
                         type={showPass ? "text" : "password"}
                         name="password"
                         id="password"
-                        className={`${isError?.type === "password" ? 'border-red-500' : ''} w-full p-2 rounded-lg border-2 outline-blue-700 disabled:bg-gray-100`} />
+                        className={`${isError?.type === "password" ? 'border-red-500' : ''} w-full p-2 rounded-lg border-2 outline-blue-700 disabled:bg-secondary bg-primary text-text`} />
                     <button
                         type='button'
                         onClick={() => setShowPass(!showPass)}
@@ -137,12 +140,12 @@ export default function Register() {
                     disabled={isLoading}
                     className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-1 text-center disabled:bg-blue-800"
                 >
-                    {isLoading ? "Yuklanmoqda..." : "Ro'yhatdan o'tish"}
+                    {isLoading ? "Загрузка..." : "Зарегистрироваться"}
                 </button>
 
                 <div className="flex justify-end">
                     <Link to={"/"} className="text-blue-500 hover:underline">
-                        Hisobga kirish
+                        Войти
                     </Link>
                 </div>
             </form>

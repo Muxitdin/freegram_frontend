@@ -8,10 +8,10 @@ export default function Message({ sender, message, isOwnMessage, time, customRef
 
     return (
         <div ref={customRef} className={`flex my-2 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
-            <div className={`flex flex-col h-fit max-w-md px-2 py-1 rounded-xl overflow-hidden ${isOwnMessage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}>
+            <div className={`flex flex-col h-fit max-w-md px-2 py-1 rounded-xl overflow-hidden ${isOwnMessage ? 'bg-sender' : 'bg-primary'}`}>
                 <span className="flex justify-between items-end">
-                    <div className="break-words max-w-full whitespace-pre-wrap">{message}</div>
-                    <span className="text-xs text-right ml-2 whitespace-nowrap flex-shrink-0">{extractTime(time)}</span>
+                    <div className="break-words max-w-full whitespace-pre-wrap text-text">{message}</div>
+                    <span className="text-xs text-right ml-2 whitespace-nowrap flex-shrink-0 text-text">{extractTime(time)}</span>
                 </span>
             </div>
         </div>

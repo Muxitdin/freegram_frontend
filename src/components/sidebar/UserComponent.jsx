@@ -5,11 +5,11 @@ import service from "../../config/service";
 import toast from "react-hot-toast";
 import { UserContext } from "../../pages/Dashboard";
 import { messageEnd, messageStart, messageSuccess } from "../../redux/slice/messageSlice";
-import { useDelay } from "../../utils/useDelay";
+import { useDelay } from "../../hooks/useDelay";
 
 
 export default function UserComponent({ search }) {
-    const { setCurrentUser, currentUser, setIsSelected } = useContext(UserContext);
+    const { setCurrentUser, currentUser, setIsSelected, isSelected } = useContext(UserContext);
     const { users, active } = useSelector(state => state.user);
     const { messages } = useSelector(state => state.message);
     const dispatch = useDispatch();
@@ -50,11 +50,11 @@ export default function UserComponent({ search }) {
             {
                 users?.length > 0 ?
                     users?.map(user => (
-                        <div onClick={() => getMessagesFunction(user)} key={user?._id} className="flex items-start justify-between p-2 cursor-pointer hover:bg-gray-200 transition-all rounded-md">
+                        <div onClick={() => getMessagesFunction(user)} key={user?._id} className={`${isSelected === user?._id && 'bg-secondary'} flex items-center gap-4 justify-between p-2 cursor-pointer hover:bg-secondary transition-all rounded-md`}>
                             <div className="flex gap-4">
                                 <img src={user?.avatar} alt={user?.fullname} className="size-12" />
                                 <div className="flex flex-col">
-                                    <h4 className="text-base">{user?.fullname}</h4>
+                                    <h4 className="text-base text-text">{user?.fullname}</h4>
                                     {/* 30ta belgidan oshib ketsa, so'zni qirqish va ... qo'shish kerak! */}
                                     <p className="text-sm text-gray-400">
                                         {active.includes(user?._id) ?

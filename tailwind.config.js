@@ -14,6 +14,10 @@ export default {
         main: {
           1: '#f8f8f8',
         },
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        text: "var(--text)",
+        sender: "var(--sender)",
       }
     },
   },

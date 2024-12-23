@@ -2,7 +2,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import service from "./config/service"
 import { authSuccess } from "./redux/slice/authSlice"
 import { activeSuccess } from './redux/slice/userSlice'
@@ -20,7 +20,9 @@ export default function App() {
     const { user } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(user)
+    
+    const [theme, setTheme] = useState("")
+
     useEffect(() => {
         if (Cookies.get("token")) {
             async function getCurrentAuthFunction() {
@@ -34,6 +36,51 @@ export default function App() {
             };
             getCurrentAuthFunction()
         };
+    }, [])
+
+    useEffect(() => {
+        if (localStorage.getItem("theme")) {
+            setTheme(localStorage.getItem("theme"))
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            setTheme("dark")
+        } else {
+            setTheme("light")
+        }
+    }, [])
+
+    useEffect(() => {
+        const handleOnline = () => {
+            toast.success("You are online", {
+                icon: "🟢",
+                style: {
+                    background: "var(--primary)",
+                    color: "var(--text)"
+                },
+                duration: 7000,
+            })
+        }
+
+        const handleOffline = () => {
+            toast.error(
+                "You are offline, check your internet connection",
+                {
+                    icon: "⚠",
+                    style: {
+                        background: "var(--primary)",
+                        color: "var(--text)"
+                    },
+                    duration: 7000,
+                }
+            )
+        }
+
+        window.addEventListener("online", handleOnline)
+        window.addEventListener("offline", handleOffline)
+
+        return () => {
+            window.removeEventListener("online", handleOnline)
+            window.removeEventListener("offline", handleOffline)
+        }
     }, [])
 
     useEffect(() => {
@@ -64,13 +111,13 @@ export default function App() {
 
 
     return (
-        <main>
+        <main className={theme}>
             <Toaster position="top-right" reverseOrder={true} />
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard theme={theme} setTheme={setTheme} />} />
             </Routes>
         </main>
     )

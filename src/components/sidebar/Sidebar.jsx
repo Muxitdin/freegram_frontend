@@ -1,17 +1,33 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Searchbar from "./Searchbar";
 import SidebarFooter from "./SidebarFooter";
 import UserComponent from "./UserComponent";
-import { CiMenuBurger } from "react-icons/ci";
+import { IoIosMenu } from 'react-icons/io'
+import SidebarModal from './SidebarModal'
+import { UserContext } from '../../pages/Dashboard'
 
 export default function Sidebar() {
     const [search, setSearch] = useState("");
+    const { isModal, setIsModal, theme, setTheme } = useContext(UserContext);
+    const [isArchive, setIsArchive] = useState(false);
+    const [isSettings, setIsSettings] = useState(false);
+
+    const menuFunction = (e) => {
+        e.stopPropagation();
+        setIsModal(!isModal);
+    }
 
     return (
-        <main className="relative flex flex-col gap-4 w-1/4 h-screen p-2 bg-main-1 shadow-xl z-20">
-            <div className="flex items-center gap-2">
-                <button><CiMenuBurger className="text-2xl text-gray-500 hover:text-gray-800 transition-all" /></button>
+        <main className="relative flex flex-col gap-4 w-1/4 h-screen p-2 bg-primary shadow-lg z-20">
+            <div className="flex items-center gap-2 px-3">
+                <button onClick={menuFunction}><IoIosMenu className="text-[26px] text-text hover:text-gray-500 transition-all" /></button>
                 <Searchbar search={search} setSearch={setSearch} />
+                {isModal && <SidebarModal
+                    setIsArchive={setIsArchive}
+                    setIsSettings={setIsSettings}
+                    theme={theme}
+                    setTheme={setTheme}
+                />}
             </div>
             <UserComponent search={search}/>
             <SidebarFooter />

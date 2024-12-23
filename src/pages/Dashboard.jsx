@@ -8,7 +8,7 @@ import HalfRingLoader from "../utils/HalfRingLoader";
 
 export const UserContext = createContext()
 
-export default function Dashboard() {
+export default function Dashboard({ theme, setTheme }) {
     const { isLoading, isLoggedIn } = useSelector(state => state.auth);
     const { isMessageLoading, messages } = useSelector(state => state.message);
 
@@ -16,15 +16,16 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState(null)
     const [isSelected, setIsSelected] = useState(false);
-
+    const [userModal, setUserModal] = useState(false);
+    const [isModal, setIsModal] = useState(false);
 
     useEffect(() => {
         if (!isLoggedIn) navigate('/');
     }, [isLoggedIn, navigate]);
 
     return (
-        <UserContext.Provider value={{ isSelected, setIsSelected, currentUser, setCurrentUser }}>
-            <main className="w-full h-screen overflow-hidden flex">
+        <UserContext.Provider value={{ isSelected, setIsSelected, currentUser, setCurrentUser, userModal, setUserModal, isModal, setIsModal, theme, setTheme }}>
+            <main onClick={() => setIsModal(false)} className="w-full h-screen overflow-hidden flex dark:bg-gray-800">
                 {isLoading && <HalfRingLoader />}
                 <Sidebar />
                 {
@@ -34,6 +35,7 @@ export default function Dashboard() {
                         </div>
                         : isSelected ? <Messagebar /> : <Starter txt={"Выберите кому хотели бы написать"}/>
                 }
+                {userModal && <UserInfo />}
             </main>
         </UserContext.Provider>
     )

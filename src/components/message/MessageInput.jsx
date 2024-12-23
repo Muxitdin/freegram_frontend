@@ -12,7 +12,7 @@ export default function MessageInput() {
     const [message, setMessage] = useState('')
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const textareaRef = useRef(null)
-    const { currentUser } = useContext(UserContext)
+    const { currentUser, theme } = useContext(UserContext)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function MessageInput() {
     }
 
     return (
-        <form onSubmit={handleSend} className="absolute bottom-0 min-w-full flex items-center p-4 border-t border-gray-300 bg-main-1">
+        <form onSubmit={handleSend} className="absolute bottom-0 min-w-full flex items-center p-3 border-none bg-primary shadow-smooth">
             <textarea
                 ref={textareaRef}
                 type="text"
@@ -66,20 +66,20 @@ export default function MessageInput() {
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
-                className="flex-1 p-3 border-none rounded-lg focus:outline-none bg-blue-100 resize-none"
+                className="flex-1 p-3 border-none rounded-lg focus:outline-none resize-none text-text bg-secondary"
                 rows={1}
                 style={{ maxHeight: '150px' }}
             />
             <button
                 type='button'
                 onClick={toggleEmojiPicker}
-                className="ml-2 p-3 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 focus:outline-none"
+                className="ml-2 p-3 bg-secondary text-gray-600 rounded-lg focus:outline-none"
             >
                 😀
             </button>
             {showEmojiPicker && (
                 <div className="absolute bottom-full right-4 mb-1 z-10">
-                    <EmojiPicker onEmojiClick={handleEmojiClick} theme={"light"} autoFocusSearch={true} emojiStyle={"google"} width={300} height={450} searchDisabled={true} />
+                    <EmojiPicker onEmojiClick={handleEmojiClick} theme={theme} autoFocusSearch={true} emojiStyle={"google"} width={300} height={450} searchDisabled={true} />
                 </div>
             )}
             <button
